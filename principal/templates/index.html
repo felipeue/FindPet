@@ -1,14 +1,27 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>FindPet</title>
-    </head>
+{% extends 'base.html' %}
 
-    <body>
-        <h1>FindPet</h1>
-        <h2>Buscador de mascotas en tiempo real</h2>
-        <p>En construcción </p>
-    </body>
+{% block main %}
+ <div>
+ <h1>FindPet</h1>
 
-</html>
-
+ <p>
+   <ul>
+   {% if user and not user.is_anonymous %}
+     <li>
+       <a>Bienvenido {{ user.get_full_name|default:user.username }}!</a>
+     </li>
+     <li>
+       <a href="{% url 'auth:logout' %}?next={{ request.path }}">Logout</a>
+     </li>
+   {% else %}
+     <li>
+       <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">Conectar con Facebook</a>
+     </li>
+     <li>
+       <a href="{% url 'social:begin' 'twitter' %}?next={{ request.path }}">Conectar con Twitter</a>
+     </li>
+   {% endif %}
+   </ul>
+ </p>
+ </div>
+{% endblock %}

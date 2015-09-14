@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'principal',
+    'social.apps.django_app.default',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -64,6 +65,15 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.contrib.auth.context_processors.auth',
+                'django.core.context_processors.debug',
+                'django.core.context_processors.i18n',
+                'django.core.context_processors.media',
+                'django.core.context_processors.static',
+                'django.core.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+                'social.apps.django_app.context_processors.backends',
+                'social.apps.django_app.context_processors.login_redirect',
             ],
         },
     },
@@ -115,3 +125,16 @@ TEMPLATE_DIRS = (
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+AUTHENTICATION_BACKENDS = (
+    'social.backends.facebook.FacebookOAuth2',
+    'social.backends.google.GoogleOAuth2',
+    'social.backends.twitter.TwitterOAuth',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+LOGIN_REDIRECT_URL = '/'
+
+SOCIAL_AUTH_FACEBOOK_KEY = '974444265910715'
+
+SOCIAL_AUTH_FACEBOOK_SECRET = '7790d79ef0a64c90de69f812d62dd3c0'
