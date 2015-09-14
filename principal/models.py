@@ -1,4 +1,5 @@
 from django.db import models
+from djgeojson.fields import PointField
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 # Create your models here.
@@ -6,12 +7,14 @@ from django.template.defaultfilters import slugify
 
 class UserProfile(models.Model):
     user_profile = models.OneToOneField(User)
+    first_name = models.CharField(max_length=128)
+    last_name = models.CharField(max_length=128)
     address = models.CharField(max_length=128)
     phone = models.CharField(max_length=20)
     email = models.EmailField(max_length=128)
 
     def __unicode__(self):
-        return self.user.username
+        return self.user_profile.username
 
 
 class Post(models.Model):
@@ -21,9 +24,10 @@ class Post(models.Model):
     type = models.CharField(max_length=20)
     state = models.BooleanField(default=True)
     date = models.DateField(blank=True)
+    location = PointField()
 
     def __unicode__(self):
-        return self.id
+        return unicode(self.id)
 
 
 class Picture(models.Model):
@@ -31,7 +35,7 @@ class Picture(models.Model):
     post_picture = models.ForeignKey(Post)
 
     def __unicode__(self):
-        return self.id
+        return unicode(self.id)
 
 
 class Dog(models.Model):
@@ -44,7 +48,7 @@ class Dog(models.Model):
     post_dog = models.ForeignKey(Post)
 
     def __unicode__(self):
-        return self.id
+        return unicode(self.id)
 
 
 class Comment(models.Model):
@@ -53,5 +57,5 @@ class Comment(models.Model):
     text = models.TextField(max_length=500)
 
     def __unicode__(self):
-        return self.id
+        return unicode(self.id)
 

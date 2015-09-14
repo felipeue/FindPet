@@ -39,6 +39,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'principal',
     'social.apps.django_app.default',
+    'leaflet',
+    'djgeojson',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -109,7 +111,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
-STATIC_PATH = os.path.join(BASE_DIR,'static')
+STATIC_PATH = os.path.join(BASE_DIR, 'static')
 
 STATIC_URL = '/static/'
 
@@ -138,3 +140,8 @@ LOGIN_REDIRECT_URL = '/'
 SOCIAL_AUTH_FACEBOOK_KEY = '974444265910715'
 
 SOCIAL_AUTH_FACEBOOK_SECRET = '7790d79ef0a64c90de69f812d62dd3c0'
+
+PASSWORD_HASHERS = (
+    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
+)
