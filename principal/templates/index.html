@@ -1,6 +1,16 @@
 {% extends 'base.html' %}
+{% load leaflet_tags %}
+{% load geojson_tags %}
+
+
 
 {% block main %}
+
+  {% block extra_assets %}
+  {% leaflet_js %}
+  {% leaflet_css %}
+
+{% endblock %}
  <div>
  <h1>FindPet</h1>
 
@@ -8,7 +18,7 @@
    <ul>
    {% if user and not user.is_anonymous %}
      <li>
-       <a>Bienvenido {{ user.get_full_name|default:user.username }}!</a>
+       <a>Bienvenido {{ user.get_full_name|default:user.username }}</a>
      </li>
      <li>
        <a href="{% url 'auth:logout' %}?next={{ request.path }}">Logout</a>
@@ -21,7 +31,22 @@
        <a href="{% url 'social:begin' 'twitter' %}?next={{ request.path }}">Conectar con Twitter</a>
      </li>
    {% endif %}
+
    </ul>
+ {% block content %}
+
+    <script type="text/javascript">
+      var collection = {{ qs_results|geojsonfeature|safe }};
+      function map_init(map, options) {
+          L.geoJson(collection).addTo(map);
+      }
+    </script>
+
+    {% leaflet_map "spots" callback="window.map_init" %}
+
+{% endblock %}
  </p>
  </div>
 {% endblock %}
+
+
