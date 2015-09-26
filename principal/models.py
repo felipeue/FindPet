@@ -1,7 +1,6 @@
 from django.db import models
-from djgeojson.fields import PointField
 from django.contrib.auth.models import User
-from django.template.defaultfilters import slugify
+from geoposition.fields import GeopositionField
 # Create your models here.
 
 
@@ -24,7 +23,8 @@ class Post(models.Model):
     type = models.CharField(max_length=20)
     state = models.BooleanField(default=True)
     date = models.DateField(blank=True)
-    location = PointField()
+    position = GeopositionField()
+
 
     def __unicode__(self):
         return unicode(self.id)

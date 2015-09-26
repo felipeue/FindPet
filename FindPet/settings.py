@@ -39,8 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'principal',
     'social.apps.django_app.default',
-    'leaflet',
-    'djgeojson',
+    "geoposition",
 )
 
 MIDDLEWARE_CLASSES = (
