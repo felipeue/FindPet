@@ -1,5 +1,5 @@
 # FindPet
-Web app to search and finds pets
+Web app to search and finds pets 
 
 Requeriments:
 Pillow
