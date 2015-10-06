@@ -25,9 +25,8 @@ class Post(models.Model):
     date = models.DateField(blank=True)
     position = GeopositionField()
 
-
     def __unicode__(self):
-        return unicode(self.id)
+        return unicode(self.user_post)
 
 
 class Picture(models.Model):
