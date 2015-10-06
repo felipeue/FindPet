@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Pet Finder</title>
+    </head>
+
+    <body>
+        <h1> Pet Finder</h1>
+
+        {% if registered %}
+        <strong>Gracias por registrarte!</strong>
+        <a href="/principal/">Volver a pagina de inicio.</a><br />
+        {% else %}
+        <strong>Ingresa tus datos</strong><br />
+
+        <form id="user_form" method="post" action="/principal/register/"
+                enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ user_form.as_p }}
+            {{ profile_form.as_p }}
+            <input type="submit" name="submit" value="Register" />
+        </form>
+        {% endif %}
+
+
+    </body>
+
+</html>
