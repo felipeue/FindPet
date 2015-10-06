@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+
 {% block main %}
    <head>
         <meta charset="utf-8">
@@ -11,33 +12,47 @@
     </head>
     <div id="map-canvas"></div>
 
+        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false"></script>
-        <script>
+        <script type="text/javascript">
+
             function initialize() {
                 var map = new google.maps.Map(document.getElementById('map-canvas'));
                 var bounds = new google.maps.LatLngBounds();
+
                 function addMarker(lat, lng, title, detail) {
                     var position = new google.maps.LatLng(lat, lng);
+
+                    /*console.log(lat, lng, title, detail, typeof lat, typeof lng, typeof title, typeof detail);*/
+
                     var marker = new google.maps.Marker({
                         position: position,
                         map: map,
                         title: title
                     });
-                    var contentString = detail;
                     var windowinfo = new google.maps.InfoWindow({
-                        content: contentString
+                        content: detail
                     });
+
                     marker.addListener('click', function() {
-                    windowinfo.open(map, marker);
+                        windowinfo.open(map, marker);
                     });
+
                     bounds.extend(position);
                 }
                 {% for point in points %}
+                    function myFunction(a) {
+                    return a.replace(",",".");
+                    }
+                    var lat = myFunction('{{ point.position.latitude }}');
+                    var lon = myFunction('{{ point.position.longitude }}');
+                    addMarker(lat, lon, "{{ point.title }}", "{{ point.detail }}");
 
-                    addMarker({{ point.position.latitude }}, {{ point.position.longitude }}, "{{ point.title }}", '{{ point.detail }}');
                 {% endfor %}
                 map.fitBounds(bounds);
             }
+
             google.maps.event.addDomListener(window, 'load', initialize);
         </script>
 {% endblock %}
