@@ -5,15 +5,12 @@ from geoposition.fields import GeopositionField
 
 
 class UserProfile(models.Model):
-    user_profile = models.OneToOneField(User)
-    first_name = models.CharField(max_length=128)
-    last_name = models.CharField(max_length=128)
+    user = models.OneToOneField(User)
     address = models.CharField(max_length=128)
     phone = models.CharField(max_length=20)
-    email = models.EmailField(max_length=128)
 
     def __unicode__(self):
-        return self.user_profile.username
+        return self.user.username
 
 
 class Post(models.Model):
