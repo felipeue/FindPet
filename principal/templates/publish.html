@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Rango</title>
+    </head>
+
+    <body>
+        <h1>Register with Rango</h1>
+
+        {% if registered %}
+
+        <a href="/principal/">Return to the homepage.</a><br />
+        {% else %}
+
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+        <form id="user_form" method="post" action="/principal/publish/" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ post_form.as_p }}
+            {{ dog_form.as_p }}
+            {{ picture_form.as_p }}
+            <input type="submit" name="submit" value="publicar" />
+        </form>
+        {% endif %}
+    </body>
+</html>

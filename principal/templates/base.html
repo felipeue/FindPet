@@ -28,6 +28,9 @@
      <li>
        <a href="{% url 'auth:logout' %}?next={{ request.path }}">Logout</a>
      </li>
+       <li>
+       <a href="/principal/publish/">Realizar publicación</a>
+     </li>
    {% else %}
      <li>
        <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">Conectar con Facebook</a>

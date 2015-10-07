@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from principal.models import Post
-from principal.forms import UserForm, UserProfileForm
+from principal.forms import UserForm, UserProfileForm, PostForm, PictureForm, DogForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 
 
 def index(request):
@@ -51,3 +52,32 @@ def user_login(request):
             return HttpResponse('Invalid login details')
     else:
         return render(request, 'login.html', {})
+
+
+@login_required
+def publish(request):
+    if request.method == 'POST':
+        post_form = PostForm(data=request.POST)
+        dog_form = DogForm(data=request.POST)
+        picture_form = PictureForm(data=request.POST)
+        if post_form.is_valid() and dog_form.is_valid():
+            post = post_form.save(commit=False)
+            post.user_post = request.user
+            post.save()
+            dog = dog_form.save(commit=False)
+            dog.post_dog = post
+            dog.save()
+            picture = picture_form.save(commit=False)
+            if 'picture' in request.FILES:
+                picture.picture = request.FILES['picture']
+            picture.post_picture = post
+            picture.save()
+        else:
+            print post_form.errors, dog_form.errors, post_form
+    else:
+        post_form = PostForm()
+        dog_form = DogForm()
+        picture_form = PictureForm()
+    return render(request,
+                  'publish.html',
+                  {'post_form': post_form, 'dog_form': dog_form, 'picture_form': picture_form})
