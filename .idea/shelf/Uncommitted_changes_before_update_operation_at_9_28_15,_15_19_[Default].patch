@@ -1,0 +1,64 @@
+Index: principal/templates/index.html
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- principal/templates/index.html	(revision 8a0b77767e54cc15625abf603b24749562343769)
++++ principal/templates/index.html	(revision )
+@@ -32,7 +32,9 @@
+        <a href="{% url 'social:begin' 'twitter' %}?next={{ request.path }}">Conectar con Twitter</a>
+      </li>
+    {% endif %}
+-
++    {% for point in points %}
++        <p>{{ point.detail }}</p>
++                {% endfor %}
+    </ul>
+  </div>
+     <div id="map-canvas"></div>
+@@ -42,25 +44,25 @@
+             function initialize() {
+                 var map = new google.maps.Map(document.getElementById('map-canvas'));
+                 var bounds = new google.maps.LatLngBounds();
+-                function addMarker(lat, lng, title, details) {
++                function addMarker(lat, lng, title, detail) {
+                     var position = new google.maps.LatLng(lat, lng);
+                     var marker = new google.maps.Marker({
+                         position: position,
+                         map: map,
+                         title: title
+                     });
+-                    var contentString = "<p> + String(details) + </p>";
+-                    var infowindow = new google.maps.InfoWindow({
++                    var contentString = detail;
++                    var windowinfo = new google.maps.InfoWindow({
+                         content: contentString
+                     });
+                     marker.addListener('click', function() {
+-                    infowindow.open(map, marker);
++                    windowinfo.open(map, marker);
+                     });
+-
+                     bounds.extend(position);
+                 }
+                 {% for point in points %}
+-                    addMarker({{ point.position.latitude }}, {{ point.position.longitude }}, "{{ point.title }}", "{{ point.detail }}");
++
++                    addMarker({{ point.position.latitude }}, {{ point.position.longitude }}, "{{ point.title }}", '{{ point.detail }}');
+                 {% endfor %}
+                 map.fitBounds(bounds);
+             }
+Index: README.md
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- README.md	(revision 8a0b77767e54cc15625abf603b24749562343769)
++++ README.md	(revision )
+@@ -1,5 +1,5 @@
+ # FindPet
+-Web app to search and finds pets
++Web app to search and finds pets 
+ 
+ Requeriments:
+ Pillow

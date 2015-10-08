@@ -1,16 +1,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Rango</title>
+        <title>Pet Finder</title>
     </head>
 
     <body>
-        <h1>Register with Rango</h1>
-
-        {% if registered %}
-
-        <a href="/principal/">Return to the homepage.</a><br />
-        {% else %}
+        <h1>Pet Finder</h1>
 
             <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
         <form id="user_form" method="post" action="/principal/publish/" enctype="multipart/form-data">
@@ -20,6 +15,6 @@
             {{ picture_form.as_p }}
             <input type="submit" name="submit" value="publicar" />
         </form>
-        {% endif %}
+
     </body>
 </html>
