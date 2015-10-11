@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Rango</title>
-    </head>
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block main %}
 
     <body>
-        <h1>Register with Rango</h1>
+        <h1>Realizar publicación</h1>
 
         {% if registered %}
 
@@ -22,4 +20,4 @@
         </form>
         {% endif %}
     </body>
-</html>
+{% endblock %}
