@@ -19,6 +19,11 @@ class UserProfileForm(forms.ModelForm):
 
 
 class PostForm(forms.ModelForm):
+    class Media:
+        css = {'all': ('css/geoposition.css',)}
+
+        js = ('js/geoposition.js',)
+
     class Meta:
         model = Post
         exclude = ('user_post',)
