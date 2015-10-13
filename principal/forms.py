@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.auth.models import User
 from principal.models import Post, UserProfile, Dog, Picture
-from geoposition.fields import GeopositionField
+from geoposition.forms import GeopositionField
+
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
@@ -18,7 +19,6 @@ class UserProfileForm(forms.ModelForm):
 
 
 class PostForm(forms.ModelForm):
-
     class Meta:
         model = Post
         exclude = ('user_post',)

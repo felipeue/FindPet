@@ -33,7 +33,7 @@
      </li>
    {% else %}
      <li>
-       <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">Conectar con Facebook</a>
+       <a href="{% url 'social:begin' 'facebook' %}?next=/principal/details/">Conectar con Facebook</a>
      </li>
      <li>
        <a href="{% url 'social:begin' 'twitter' %}?next={{ request.path }}">Conectar con Twitter</a>
@@ -48,6 +48,7 @@
    </ul>
  </div>
    {% block main %}{% endblock %}
+
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
    <script src="/static/js/bootstrap.min.js"></script>
  </body>

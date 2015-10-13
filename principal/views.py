@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from principal.models import Post
+from principal.models import Post, UserProfile
 from principal.forms import UserForm, UserProfileForm, PostForm, PictureForm, DogForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
@@ -33,6 +33,26 @@ def register(request):
     return render(request,
                   'register.html',
                   {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
+
+
+def user_data(request):
+    current = request.user
+    if UserProfile.objects.filter(user=current).exists():
+        registered = True
+        data = ''
+    else:
+        registered = False
+        if request.method == 'POST':
+            data = UserProfileForm(data=request.POST)
+            if data.is_valid():
+                details = data.save(commit=False)
+                details.user = request.user
+                details.save()
+            else:
+                print data.errors
+        else:
+            data = UserProfileForm()
+    return render(request, 'details.html', {'data': data, 'registered': registered})
 
 
 def user_login(request):
@@ -81,3 +101,4 @@ def publish(request):
     return render(request,
                   'publish.html',
                   {'post_form': post_form, 'dog_form': dog_form, 'picture_form': picture_form})
+
