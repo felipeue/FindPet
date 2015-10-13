@@ -9,6 +9,7 @@
         <form id="user_form" method="post" action="/principal/publish/" enctype="multipart/form-data">
             {% csrf_token %}
             {{ post_form.as_p }}
+            {{ post_form.media }}
             {{ dog_form.as_p }}
             {{ picture_form.as_p }}
             <input type="submit" name="submit" value="publicar" />
