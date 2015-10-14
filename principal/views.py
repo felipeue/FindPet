@@ -38,7 +38,7 @@ def register(request):
 def user_data(request):
     current = request.user
     if UserProfile.objects.filter(user=current).exists():
-        registered = True
+        return index(request)
         data = ''
     else:
         registered = False
@@ -48,6 +48,7 @@ def user_data(request):
                 details = data.save(commit=False)
                 details.user = request.user
                 details.save()
+                return index(request)
             else:
                 print data.errors
         else:
@@ -92,6 +93,7 @@ def publish(request):
                 picture.picture = request.FILES['picture']
             picture.post_picture = post
             picture.save()
+            return index(request)
         else:
             print post_form.errors, dog_form.errors, post_form
     else:
@@ -102,3 +104,8 @@ def publish(request):
                   'publish.html',
                   {'post_form': post_form, 'dog_form': dog_form, 'picture_form': picture_form})
 
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect('/principal/')
