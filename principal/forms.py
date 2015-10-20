@@ -38,4 +38,4 @@ class DogForm(forms.ModelForm):
 class PictureForm(forms.ModelForm):
     class Meta:
         model = Picture
-        exclude = ('post_picture',)
+        exclude = ('post_picture', 'front')

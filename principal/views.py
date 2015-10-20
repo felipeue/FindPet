@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from principal.models import Post, UserProfile
+from principal.models import Post, UserProfile, Picture
 from principal.forms import UserForm, UserProfileForm, PostForm, PictureForm, DogForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
@@ -8,7 +8,8 @@ from django.contrib.auth.decorators import login_required
 
 def index(request):
 
-    points = Post.objects.all()
+    points = Picture.objects.select_related('post_picture').all()
+
     return render(request, 'index.html', {'points': points})
 
 
@@ -57,7 +58,6 @@ def user_data(request):
 
 
 def user_login(request):
-
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -109,3 +109,5 @@ def publish(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/principal/')
+
+
