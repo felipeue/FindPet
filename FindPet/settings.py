@@ -150,3 +150,4 @@ PASSWORD_HASHERS = (
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
 AUTH_PROFILE_MODULE = 'principal.UserProfile'
+

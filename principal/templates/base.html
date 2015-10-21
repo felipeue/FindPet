@@ -26,7 +26,7 @@
        <a>Bienvenido {{ user.get_full_name|default:user.username }}</a>
      </li>
      <li>
-       <a href="{% url 'auth:logout' %}?next={{ request.path }}">Logout</a>
+       <a href="/principal/logout/">Logout</a>
      </li>
        <li>
        <a href="/principal/publish/">Realizar publicación</a>
@@ -47,8 +47,11 @@
    {% endif %}
    </ul>
  </div>
-   {% block main %}{% endblock %}
+  <div style="position: relative;">
+   {% block main %}
 
+   {% endblock %}
+</div>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
    <script src="/static/js/bootstrap.min.js"></script>
  </body>

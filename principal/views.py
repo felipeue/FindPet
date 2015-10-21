@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from principal.models import Post, UserProfile
+from principal.models import Post, UserProfile, Picture, Dog
 from principal.forms import UserForm, UserProfileForm, PostForm, PictureForm, DogForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
@@ -8,7 +8,8 @@ from django.contrib.auth.decorators import login_required
 
 def index(request):
 
-    points = Post.objects.all()
+    points = Picture.objects.select_related('post_picture').all()
+
     return render(request, 'index.html', {'points': points})
 
 
@@ -38,7 +39,7 @@ def register(request):
 def user_data(request):
     current = request.user
     if UserProfile.objects.filter(user=current).exists():
-        registered = True
+        return index(request)
         data = ''
     else:
         registered = False
@@ -48,6 +49,7 @@ def user_data(request):
                 details = data.save(commit=False)
                 details.user = request.user
                 details.save()
+                return index(request)
             else:
                 print data.errors
         else:
@@ -56,7 +58,6 @@ def user_data(request):
 
 
 def user_login(request):
-
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -92,6 +93,7 @@ def publish(request):
                 picture.picture = request.FILES['picture']
             picture.post_picture = post
             picture.save()
+            return index(request)
         else:
             print post_form.errors, dog_form.errors, post_form
     else:
@@ -101,4 +103,25 @@ def publish(request):
     return render(request,
                   'publish.html',
                   {'post_form': post_form, 'dog_form': dog_form, 'picture_form': picture_form})
+
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect('/principal/')
+
+
+def posts(request, post_id):
+    data = Post.objects.select_related('user_post').filter(id=post_id)
+    if data.exists():
+        post = Post.objects.get(id=post_id)
+        dog = Dog.objects.get(post_dog=post)
+        picture = Picture.objects.get(post_picture=post)
+        user = post.user_post.id
+        profile = UserProfile.objects.get(user=user)
+        return render(request, 'posts.html', {'post': post, 'dog': dog, 'picture': picture, 'profile': profile})
+    else:
+        return index(request)
+
+
 

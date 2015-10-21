@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    <head>
+        <meta charset="utf-8">
+        <title>Dogs</title>
+        <style>
+            #map-canvas {
+                height: 600px;
+            }
+        </style>
+    </head>
+
+    <div>
+    {{ post.title }}
+    {{ post.detail }}
+    {{ post.type }}
+    {{ post.date }}
+</div>
+
+    <div>
+    {{ dog.name }}
+    {{ dog.breed }}
+    {{ dog.colour }}
+    {{ dog.sex }}
+    {{ dog.age }}
+    {{ dog.size }}
+    </div>
+     <div>
+     {{ picture.picture }}
+     </div>
+    <div>
+    {{ post.user_post.first_name }}
+    {{ post.user_post.last_name }}
+    {{ post.user_post.email }}
+    {{ profile.address }}
+    {{ profile.phone }}
+    </div>
+    <div id="map-canvas"></div>
+    <div>
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false"></script>
+        <script type="text/javascript">
+
+            function initialize() {
+                var map = new google.maps.Map(document.getElementById('map-canvas'));
+                var bounds = new google.maps.LatLngBounds();
+
+                function addMarker(lat, lng) {
+                    var position = new google.maps.LatLng(lat, lng);
+
+                    /*console.log(lat, lng, title, detail, typeof lat, typeof lng, typeof title, typeof detail);*/
+
+                    var marker = new google.maps.Marker({
+                        position: position,
+                        map: map,
+                        title: 'Ubicación perro perdido'
+                    });
+                    bounds.extend(position);
+                }
+
+                    function myFunction(a) {
+                    return a.replace(",",".");
+                    }
+                    var lat = myFunction('{{ post.position.latitude }}');
+                    var lon = myFunction('{{ post.position.longitude }}');
+                    addMarker(lat, lon);
+
+
+                map.fitBounds(bounds);
+            }
+
+            google.maps.event.addDomListener(window, 'load', initialize);
+        </script>
+
+    </div>
+{% endblock %}
+
+

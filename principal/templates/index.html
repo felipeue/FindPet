@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load staticfiles %}
 
 {% block main %}
    <head>
@@ -21,7 +22,7 @@
                 var map = new google.maps.Map(document.getElementById('map-canvas'));
                 var bounds = new google.maps.LatLngBounds();
 
-                function addMarker(lat, lng, title, detail) {
+                function addMarker(lat, lng, title, detail, image, id) {
                     var position = new google.maps.LatLng(lat, lng);
 
                     /*console.log(lat, lng, title, detail, typeof lat, typeof lng, typeof title, typeof detail);*/
@@ -31,8 +32,21 @@
                         map: map,
                         title: title
                     });
+                    var contentString = '<div id="content">'+
+                    '<h1 id="firstHeading" class="firstHeading">'+title+'</h1>'+
+                    '<div id="bodyContent">'+
+                    '<p>'+ detail+'</p>'+
+                        '<p><a href="post/'+id+'">'+
+                    'Ver post completo</a> '+
+
+                    '</div>'+
+                                     '<div>'+
+                                    '<img src="media/'+image+'" width="50%" height="50%"/>'+
+                     '</div>'+
+                            '</div>';
                     var windowinfo = new google.maps.InfoWindow({
-                        content: detail
+                        content: contentString
+
                     });
 
                     marker.addListener('click', function() {
@@ -45,9 +59,9 @@
                     function myFunction(a) {
                     return a.replace(",",".");
                     }
-                    var lat = myFunction('{{ point.position.latitude }}');
-                    var lon = myFunction('{{ point.position.longitude }}');
-                    addMarker(lat, lon, "{{ point.title }}", "{{ point.detail }}");
+                    var lat = myFunction('{{ point.post_picture.position.latitude }}');
+                    var lon = myFunction('{{ point.post_picture.position.longitude }}');
+                    addMarker(lat, lon, "{{ point.post_picture.title }}", "{{ point.post_picture.detail }}", "{{ point.picture }}", "{{ point.post_picture.id }}");
 
                 {% endfor %}
                 map.fitBounds(bounds);

@@ -1,8 +1,6 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Pet Finder</title>
-    </head>
+{% extends 'base.html' %}
+
+{% block main %}
 
     <body>
         <h1> Pet Finder</h1>
@@ -11,7 +9,7 @@
         <strong>Gracias por registrarte!</strong>
         <a href="/principal/">Volver a pagina de inicio.</a><br />
         {% else %}
-        <strong>Ingresa tus datos</strong><br />
+        <h2>Ingresa tus datos</h2><br/>
 
         <form id="user_form" method="post" action="/principal/register/"
                 enctype="multipart/form-data">
@@ -25,4 +23,4 @@
 
     </body>
 
-</html>
+{% endblock %}
