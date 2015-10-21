@@ -8,4 +8,5 @@ urlpatterns = patterns('',
                        url(r'^publish/$', views.publish, name='publish'),
                        url(r'^details/$', views.user_data, name='details'),
                        url(r'^logout', views.user_logout, name='logout'),
+                       url(r'^post/(?P<post_id>[\w\-]+)/$', views.posts, name='posts'),
                        )

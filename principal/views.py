@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from principal.models import Post, UserProfile, Picture
+from principal.models import Post, UserProfile, Picture, Dog
 from principal.forms import UserForm, UserProfileForm, PostForm, PictureForm, DogForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
@@ -109,5 +109,19 @@ def publish(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect('/principal/')
+
+
+def posts(request, post_id):
+    data = Post.objects.select_related('user_post').filter(id=post_id)
+    if data.exists():
+        post = Post.objects.get(id=post_id)
+        dog = Dog.objects.get(post_dog=post)
+        picture = Picture.objects.get(post_picture=post)
+        user = post.user_post.id
+        profile = UserProfile.objects.get(user=user)
+        return render(request, 'posts.html', {'post': post, 'dog': dog, 'picture': picture, 'profile': profile})
+    else:
+        return index(request)
+
 
 
