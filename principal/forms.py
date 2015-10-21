@@ -48,13 +48,15 @@ class DogForm(forms.ModelForm):
     sex = forms.ChoiceField(choices=CHOICES, label='Sexo')
     age = forms.CharField(label='Edad')
     size = forms.CharField(label='Tamaño')
+
     class Meta:
         model = Dog
         exclude = ('post_dog',)
 
 
 class PictureForm(forms.ModelForm):
-    picture = forms.ImageField(label='Foto')
+
+
     class Meta:
         model = Picture
         exclude = ('post_picture', 'front')
