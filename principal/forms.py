@@ -54,7 +54,7 @@ class DogForm(forms.ModelForm):
 
 
 class PictureForm(forms.ModelForm):
-    picture = forms.ImageField(label='Foto')
+
     class Meta:
         model = Picture
         exclude = ('post_picture', 'front')
