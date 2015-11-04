@@ -31,6 +31,7 @@ class PostForm(forms.ModelForm):
     date = forms.DateField(label='Fecha', initial=date.today)
 
     class Media:
+
         css = {'all': ('css/geoposition.css',)}
 
         js = ('js/geoposition.js',)

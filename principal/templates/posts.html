@@ -1,45 +1,17 @@
 {% extends 'base.html' %}
-
+{% load widget_tweaks %}
 {% block main %}
-    <head>
+    <head xmlns="http://www.w3.org/1999/html">
         <meta charset="utf-8">
         <title>Dogs</title>
         <style>
             #map-canvas {
-                height: 600px;
+                height: 200px;
             }
         </style>
     </head>
+    <div>
 
-    <div>
-    {{ post.title }}
-    {{ post.detail }}
-    {{ post.type }}
-    {{ post.date }}
-</div>
-
-    <div>
-    {{ dog.name }}
-    {{ dog.breed }}
-    {{ dog.colour }}
-    {{ dog.sex }}
-    {{ dog.age }}
-    {{ dog.size }}
-    </div>
-     <div>
-     {{ picture.picture }}
-     </div>
-    <div>
-    {{ post.user_post.first_name }}
-    {{ post.user_post.last_name }}
-    {{ post.user_post.email }}
-    {{ profile.address }}
-    {{ profile.phone }}
-    </div>
-    <div id="map-canvas"></div>
-    <div>
-    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false"></script>
         <script type="text/javascript">
 
@@ -75,6 +47,236 @@
         </script>
 
     </div>
+
+    <div class="tab-pane" id="tab_2">
+                    <div class="portlet box green">
+                        <div class="portlet-title">
+                            <div class="caption">
+                                <i class="fa fa-paw"></i>{{ post.title }}
+                            </div>
+                        </div>
+                        <div class="portlet-body form">
+                            <!-- BEGIN FORM-->
+
+                                    <div class="form-body">
+                                        <h3 class="form-section">Información de publicación</h3>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">Titulo</label>
+                                                    <div class="col-md-9">
+                                                        {{ post.title }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">Tipo</label>
+                                                    <div class="col-md-9">
+                                                        {{ post.type }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                        </div>
+                                        <!--/row-->
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group ">
+                                                    <label class="control-label col-md-3">Fecha</label>
+                                                    <div class="col-md-9">
+                                                        {{ post.date }}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!--/span-->
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">Detalles</label>
+                                                    <div class="col-md-9">
+                                                        {{ post.detail }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                        </div>
+                                        <!--/row-->
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">Ubicación</label>
+                                                    <div class="col-md-9">
+                                                         <div id="map-canvas"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+
+                                            <!--/span-->
+                                        </div>
+                                        <h3 class="form-section">Información mascota</h3>
+                                        <!--/row-->
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">Nombre</label>
+                                                    <div class="col-md-9">
+                                                        {{ dog.name }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">Raza</label>
+                                                    <div class="col-md-9">
+                                                        {{ dog.breed }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">Color</label>
+                                                    <div class="col-md-9">
+                                                        {{ dog.colour }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">Sexo</label>
+                                                    <div class="col-md-9">
+                                                        {{ dog.sex }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                        </div>
+                                        <!--/row-->
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">Edad</label>
+                                                    <div class="col-md-9">
+                                                        {{ dog.age }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">Tamaño</label>
+                                                    <div class="col-md-9">
+                                                       {{ dog.size }}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">Foto</label>
+                                                    <div class="col-md-9">
+                                                       {{ picture_form.picture }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                        </div>
+                                        <!--/row-->
+                                        <h3 class="form-section">Información de contacto</h3>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">Nombre</label>
+                                                    <div class="col-md-9">
+                                                        {{ post.user_post.first_name }} {{ post.user_post.last_name }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">Email</label>
+                                                    <div class="col-md-9">
+                                                        {{ post.user_post.email }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                        </div>
+                                        <!--/row-->
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group ">
+                                                    <label class="control-label col-md-3">Dirección</label>
+                                                    <div class="col-md-9">
+                                                        {{ profile.address}}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!--/span-->
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">Teléfono</label>
+                                                    <div class="col-md-9">
+                                                        {{ profile.phone }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+                                        </div>
+                                        <!--/row-->
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3">Ubicación</label>
+                                                    <div class="col-md-9">
+                                                         <div id="map-canvas"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+
+                                            <!--/span-->
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="control-label col-md-3"></label>
+                                                    <div class="col-md-9">
+                                                        <img src="media/{{ picture.picture }}" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--/span-->
+
+                                            <!--/span-->
+                                        </div>
+
+                                    </div>
+                                    <div class="form-actions">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="row">
+                                                    <div class="col-md-offset-3 col-md-9">
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                            <!-- END FORM-->
+                        </div>
+                    </div>
+             </div>
 {% endblock %}
 
 

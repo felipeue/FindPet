@@ -39,7 +39,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'principal',
     'social.apps.django_app.default',
-    "geoposition",
+    'geoposition',
+    'widget_tweaks',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -134,13 +135,16 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-LOGIN_REDIRECT_URL = '/principal/'
+LOGIN_REDIRECT_URL = '/'
 
-LOGIN_URL = '/principal/'
+LOGIN_URL = '/'
 
 SOCIAL_AUTH_FACEBOOK_KEY = '974444265910715'
 
 SOCIAL_AUTH_FACEBOOK_SECRET = '7790d79ef0a64c90de69f812d62dd3c0'
+
+SOCIAL_AUTH_TWITTER_KEY = 'yYZZN2iWHVSr4oIqzR29Y3dQD'
+SOCIAL_AUTH_TWITTER_SECRET = 'b2V6JoahvO4KOQIAoZFH9UeXlAAJKYrFUp9CrK5BYiTskCYR7C'
 
 PASSWORD_HASHERS = (
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',

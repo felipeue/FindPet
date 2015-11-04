@@ -1,56 +1,332 @@
 <!DOCTYPE html>
-<html lang="en">
- <head>
-   <meta charset="utf-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <title>{% block title %}Pet Finder{% endblock %}</title>
 
+{% load static %}
 
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/fbposter.css">
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8"/>
+<title>PetFinder</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="" name="description"/>
+<meta content="" name="author"/>
+<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/>
+<link href="{% static "assets/global/plugins/font-awesome/css/font-awesome.min.css" %}" rel="stylesheet" type="text/css"/>
+<link href="{% static "assets/global/plugins/simple-line-icons/simple-line-icons.min.css" %}" rel="stylesheet" type="text/css"/>
+<link href="{% static "assets/global/plugins/bootstrap/css/bootstrap.min.css" %}" rel="stylesheet" type="text/css"/>
+<link href="{% static "assets/global/plugins/uniform/css/uniform.default.css" %}" rel="stylesheet" type="text/css"/>
+<link href="{% static "assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css" %}" rel="stylesheet" type="text/css"/>
+<link href="{% static "assets/global/plugins/bootstrap-daterangepicker/daterangepicker-bs3.css" %}" rel="stylesheet" type="text/css"/>
+<link href="{% static "assets/global/plugins/fullcalendar/fullcalendar.min.css" %}" rel="stylesheet" type="text/css"/>
+<link href="{% static "assets/global/plugins/jqvmap/jqvmap/jqvmap.css" %}" rel="stylesheet" type="text/css"/>
+<link href="{% static "assets/admin/pages/css/tasks.css" %}" rel="stylesheet" type="text/css"/>
+<link href="{% static "assets/global/css/components.css" %}" id="style_components" rel="stylesheet" type="text/css"/>
+<link href="{% static "assets/global/css/plugins.css" %}" rel="stylesheet" type="text/css"/>
+<link href="{% static "assets/admin/layout/css/layout.css" %}" rel="stylesheet" type="text/css"/>
+<link href="{% static "assets/admin/layout/css/themes/darkblue.css" %}" rel="stylesheet" type="text/css" id="style_color"/>
+<link href="{% static "assets/admin/layout/css/custom.css" %}" rel="stylesheet" type="text/css"/>
+<link rel="shortcut icon" href="{% static "favicon.ico" %}"/>
 
+</head>
+<body class="page-header-fixed page-quick-sidebar-over-content page-style-square">
+<div class="page-header navbar navbar-fixed-top">
+	<div class="page-header-inner">
+		<div class="page-logo">
+			<a href="index.html">
+			<img src="{% static "assets/admin/layout/img/dog.png" %}" alt="logo" />
+			</a>
+			<div class="menu-toggler sidebar-toggler hide">
+			</div>
+		</div>
+		<a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+		</a>
+		<!-- HEADER -->
+		<div class="top-menu">
+			<ul class="nav navbar-nav pull-right">
+				{% if user and not user.is_anonymous %}
+				<li class="dropdown dropdown-user">
 
-   <![endif]-->
- </head>
- <body>
- <div>
- <h1>Pet Finder</h1>
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+					<i class="fa fa-paw"></i>
+					<span class="username username-hide-on-mobile"> {{ user.get_full_name|default:user.username }} </span>
+					<i class="fa fa-angle-down"></i>
+					</a>
 
+					<ul class="dropdown-menu dropdown-menu-default">
+						<li>
+							<a href="/profile/">
+							<i class="icon-user"></i> Perfil </a>
+						</li>
+						<li>
+							<a href="/myposts/">
+							<i class="icon-calendar"></i> Mis publicaciones </a>
+						</li>
 
-   <ul>
-   {% if user and not user.is_anonymous %}
-     <li>
-       <a>Bienvenido {{ user.get_full_name|default:user.username }}</a>
-     </li>
-     <li>
-       <a href="/principal/logout/">Logout</a>
-     </li>
-       <li>
-       <a href="/principal/publish/">Realizar publicación</a>
-     </li>
-   {% else %}
-     <li>
-       <a href="{% url 'social:begin' 'facebook' %}?next=/principal/details/">Conectar con Facebook</a>
-     </li>
-     <li>
-       <a href="{% url 'social:begin' 'twitter' %}?next={{ request.path }}">Conectar con Twitter</a>
-     </li>
-       <li>
-       <a href="/principal/register/">Registrarse</a>
-     </li>
-       <li>
-       <a href="/principal/login/">Ingresar</a>
-     </li>
-   {% endif %}
-   </ul>
- </div>
-  >
-   {% block main %}
+						<li class="divider">
+						</li>
+						<li>
+							<a href="/logout/">
+							<i class="icon-logout"></i></i> Cerrar sesión </a>
+						</li>
+					</ul>
+				</li>
+				{% else %}
+					<li class="dropdown dropdown-user">
 
-   {% endblock %}
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+					<i class="fa fa-paw"></i>
+					<span class="username username-hide-on-mobile">Ingresar </span>
+					<i class="fa fa-angle-down"></i>
+					</a>
 
- </body>
+					<ul class="dropdown-menu dropdown-menu-default">
+						<li>
+							<a href="{% url 'social:begin' 'facebook' %}?next=/details/">
+							<i class="fa fa-facebook"></i> Facebook </a>
+						</li>
+						<li>
+							<a href="{% url 'social:begin' 'twitter' %}?next=/details/">
+							<i class="fa fa-twitter"></i> Twitter </a>
+						</li>
 
+						<li>
+							<a href="login.html">
+							<i class="fa fa-google"></i> Google </a>
+						</li>
+						<li>
+							<a href="/login/">
+							<i class="fa fa-paw"></i> Cuenta PetFinder </a>
+						</li>
+						<li class="divider">
+						</li>
+						<li>
+							<a href="/register/">
+							<i class="icon-user"></i> Crear cuenta </a>
+						</li>
+					</ul>
+				</li>
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+</div>
+<!-- END HEADER -->
+<div class="clearfix">
+</div>
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+	<!-- BEGIN SIDEBAR -->
+	<div class="page-sidebar-wrapper">
+		<div class="page-sidebar navbar-collapse collapse">
+			<ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+				<li class="sidebar-toggler-wrapper">
+					<div class="sidebar-toggler">
+					</div>
+				</li>
+
+				<li class="start active open">
+					<a href="/">
+					<i class="icon-home"></i>
+					<span class="title">Home</span>
+					<span class="selected"></span>
+					</a>
+				</li>
+                <li>
+					<a href="/map/">
+					<i class="fa fa-map-marker"></i>
+					<span class="title">Mapa PetFinder</span>
+					</a>
+				</li>
+                {% if user and not user.is_anonymous %}
+				<li>
+					<a href="/publish/">
+					<i class="fa fa-edit"></i>
+					<span class="title">Realizar publicación</span>
+					</a>
+				</li>
+                {% else %}
+                <li>
+					<a href="/register/">
+					<i class="fa fa-hand-o-right"></i>
+					<span class="title">Crear cuenta</span>
+					</a>
+				</li>
+                {% endif %}
+				<li class="heading">
+					<h3 class="uppercase">Servicios de utilidad</h3>
+				</li>
+				<li>
+					<a href="index.html">
+					<i class="fa fa-plus-square"></i>
+					<span class="title">Atención medica</span>
+					</a>
+				</li>
+
+				<li>
+					<a href="index.html">
+					<i class="fa fa-group"></i>
+					<span class="title">Comunidades animalistas</span>
+					</a>
+				</li>
+
+				<li>
+                    <a href="javascript:;">
+					<i class="fa fa-slack"></i>
+					<span class="title">Redes sociales</span>
+					<span class="arrow "></span>
+					</a>
+					<ul class="sub-menu">
+						<li>
+							<a href="page_timeline.html">
+								<i class="fa fa-facebook"></i>
+                                Facebook
+							</a>
+						</li>
+						<li>
+							<a href="page_todo.html">
+							<i class="fa fa-twitter"></i>
+                                Twitter
+							</a>
+						</li>
+						<li>
+							<a href="inbox.html">
+							<i class="fa fa-google"></i>
+                                Google
+                                </a>
+						</li>
+                    </ul>
+				</li>
+
+            <li>
+                    <a href="javascript:;">
+					<i class="fa fa-fax"></i>
+					<span class="title">Contactanos</span>
+					<span class="arrow "></span>
+					</a>
+					<ul class="sub-menu">
+						<li>
+							<a href="page_timeline.html">
+								<i class="fa fa-envelope-o"></i>
+                                contacto@petfinder.cl
+							</a>
+						</li>
+						<li>
+							<a href="page_todo.html">
+							<i class="fa fa-phone"></i>
+                            +56 9 71986543
+							</a>
+						</li>
+                        <li>
+							<a href="page_todo.html">
+							<i class="fa fa-envelope-square"></i>
+                            Comunicate con nosotros
+							</a>
+						</li>
+
+                    </ul>
+				</li>
+
+			</ul>
+		</div>
+	</div>
+
+	<!-- END SIDEBAR -->
+
+	<!-- BEGIN CONTENT -->
+	<div class="page-content-wrapper">
+		<div class="page-content">
+
+			<h3 class="page-title">
+			PetFinder <small>encuentra y busca mascotas</small>
+			</h3>
+			<div class="page-bar">
+				<ul class="page-breadcrumb">
+
+				</ul>
+				<div class="page-toolbar">
+
+				</div>
+			</div>
+	{% block main %}
+
+    {% endblock %}
+        </div>
+    </div>
+</div>
+
+<!-- END CONTAINER -->
+<!-- BEGIN FOOTER -->
+<div class="page-footer">
+	<div class="page-footer-inner">
+		 2015 &copy; Desarrollo Web - UDP
+	</div>
+	<div class="scroll-to-top">
+		<i class="icon-arrow-up"></i>
+	</div>
+</div>
+<!-- END FOOTER -->
+<!-- BEGIN JAVASCRIPTS(Load javascripts at bottom, this will reduce page load time) -->
+<!-- BEGIN CORE PLUGINS -->
+<!--[if lt IE 9]>
+<script src="{% static "assets/global/plugins/respond.min.js" %}"></script>
+<script src="{% static "assets/global/plugins/excanvas.min.js" %}"></script>
+<![endif]-->
+<script src="{% static "assets/global/plugins/jquery.min.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/global/plugins/jquery-migrate.min.js" %}" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui-1.10.3.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script src="{% static "assets/global/plugins/jquery-ui/jquery-ui-1.10.3.custom.min.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/global/plugins/bootstrap/js/bootstrap.min.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/global/plugins/jquery.blockui.min.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/global/plugins/jquery.cokie.min.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/global/plugins/uniform/jquery.uniform.min.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" %}" type="text/javascript"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script src="{% static "assets/global/plugins/jqvmap/jqvmap/jquery.vmap.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/global/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/global/plugins/flot/jquery.flot.min.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/global/plugins/flot/jquery.flot.resize.min.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/global/plugins/flot/jquery.flot.categories.min.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/global/plugins/jquery.pulsate.min.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/global/plugins/bootstrap-daterangepicker/moment.min.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/global/plugins/bootstrap-daterangepicker/daterangepicker.js" %}" type="text/javascript"></script>
+<!-- IMPORTANT! fullcalendar depends on jquery-ui-1.10.3.custom.min.js for drag & drop support -->
+<script src="{% static "assets/global/plugins/fullcalendar/fullcalendar.min.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/global/plugins/jquery.sparkline.min.js" %}" type="text/javascript"></script>
+<!-- END PAGE LEVEL PLUGINS -->
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="{% static "assets/global/scripts/metronic.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/admin/layout/scripts/layout.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/admin/layout/scripts/quick-sidebar.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/admin/layout/scripts/demo.js"  %}" type="text/javascript"></script>
+<script src="{% static "assets/admin/pages/scripts/index.js" %}" type="text/javascript"></script>
+<script src="{% static "assets/admin/pages/scripts/tasks.js" %}" type="text/javascript"></script>
+<!-- END PAGE LEVEL SCRIPTS -->
+<script>
+jQuery(document).ready(function() {
+   Metronic.init(); // init metronic core componets
+   Layout.init(); // init layout
+   QuickSidebar.init(); // init quick sidebar
+   Demo.init(); // init demo features
+   Index.init();
+   Index.initDashboardDaterange();
+   Index.initJQVMAP(); // init index page's custom scripts
+   Index.initCalendar(); // init index page's custom scripts
+   Index.initCharts(); // init index page's custom scripts
+   Index.initChat();
+   Index.initMiniCharts();
+   Tasks.initDashboardWidget();
+});
+</script>
+<!-- END JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
 </html>

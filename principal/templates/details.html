@@ -1,29 +1,54 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Pet Finder</title>
-    </head>
+{% extends 'base.html' %}
+{% load widget_tweaks %}
 
+{% block main %}
     <body>
-        <h1> Pet Finder</h1>
-
         {% if registered %}
 
         <a href="/principal/">Volver a pagina de inicio.</a><br />
 
         {% else %}
-
-        <strong>Ingresa tus datos de contacto</strong><br />
-        <form id="user_form" method="post" action="/principal/details/"
+             <div class="portlet box blue">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="fa fa-paw"></i> Ingresa tus datos de contacto
+							</div>
+						</div>
+						<div class="portlet-body form">
+                            <form id="user_form" method="post" action="/details/"
                 enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ data.as_p }}
+                            {% csrf_token %}
+                                <div class="form-body">
+                                    <div class="form-group">
+										<label>Dirección</label>
+										<div class="input-group">
+											<span class="input-group-addon">
+											<i class="fa fa-child"></i>
+											</span>
+                                            {{ data.address|add_class:"form-control" }}
+										</div>
+									</div>
 
-            <input type="submit" name="submit" value="Register" />
-        </form>
+                                    <div class="form-group">
+										<label for="exampleInputPassword1">Teléfono</label>
+										<div class="input-group">
+
+                                            {{ data.phone|add_class:"form-control" }}
+                                            <span class="input-group-addon">
+											<i class="fa fa-user"></i>
+											</span>
+										</div>
+                                     </div>
+                                </div>
+                                <div class="form-actions">
+									<button type="submit" class="btn blue">Ingresar</button>
+								</div>
+                            </form>
+                        </div>
+         </div>
         {% endif %}
 
 
     </body>
+{% endblock %}
 
-</html>

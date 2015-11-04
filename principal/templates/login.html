@@ -3,17 +3,44 @@
 {% block main %}
 
     <body>
-        <h1>Ingresar</h1>
 
-        <form id="login_form" method="post" action="/principal/login/">
-            {% csrf_token %}
-            Nombre de usuario: <input type="text" name="username" value="" size="50" />
-            <br />
-            Contraseña: <input type="password" name="password" value="" size="50" />
-            <br/>
-            <input type="submit" value="submit" />
-        </form>
+         <div class="portlet box blue">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="fa fa-paw"></i> Ingresar
+							</div>
+						</div>
+						<div class="portlet-body form">
+                            <form id="login_form" method="post" action="/login/">
+                            {% csrf_token %}
+                                <div class="form-body">
+                                    <div class="form-group">
+										<label>Nombre de usuario</label>
+										<div class="input-group">
+											<span class="input-group-addon">
+											<i class="fa fa-child"></i>
+											</span>
+                                            <input type="text" name="username" value="" size="50" class="form-control"/>
+										</div>
+									</div>
 
+                                    <div class="form-group">
+										<label for="exampleInputPassword1">Password</label>
+										<div class="input-group">
+
+                                            <input type="password" name="password" value="" size="50" class="form-control"/>
+                                            <span class="input-group-addon">
+											<i class="fa fa-user"></i>
+											</span>
+										</div>
+                                     </div>
+                                </div>
+                                <div class="form-actions">
+									<button type="submit" class="btn blue">Ingresar</button>
+								</div>
+                            </form>
+                        </div>
+         </div>
     </body>
 
 {% endblock %}

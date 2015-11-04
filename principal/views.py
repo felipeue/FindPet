@@ -9,8 +9,8 @@ from django.contrib.auth.decorators import login_required
 def index(request):
 
     points = Picture.objects.select_related('post_picture').all()
-
-    return render(request, 'index.html', {'points': points})
+    losses = Picture.objects.select_related('post_picture').order_by('-id')[:5]
+    return render(request, 'index.html', {'points': points, 'losses': losses})
 
 
 def register(request):
@@ -39,7 +39,7 @@ def register(request):
 def user_data(request):
     current = request.user
     if UserProfile.objects.filter(user=current).exists():
-        return index(request)
+        return HttpResponseRedirect('/')
         data = ''
     else:
         registered = False
@@ -49,7 +49,7 @@ def user_data(request):
                 details = data.save(commit=False)
                 details.user = request.user
                 details.save()
-                return index(request)
+                return HttpResponseRedirect('/')
             else:
                 print data.errors
         else:
@@ -65,12 +65,12 @@ def user_login(request):
         if user:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect('/principal/')
+                return HttpResponseRedirect('/')
             else:
                 return HttpResponse("You account is disabled")
         else:
-            print "invalid login details: {0}, {1}".format(username, password)
-            return HttpResponse('Invalid login details')
+            return HttpResponseRedirect('/login/')
+
     else:
         return render(request, 'login.html', {})
 
@@ -93,7 +93,7 @@ def publish(request):
                 picture.picture = request.FILES['picture']
             picture.post_picture = post
             picture.save()
-            return index(request)
+            return HttpResponseRedirect('/')
         else:
             print post_form.errors, dog_form.errors, post_form
     else:
@@ -108,7 +108,7 @@ def publish(request):
 @login_required
 def user_logout(request):
     logout(request)
-    return HttpResponseRedirect('/principal/')
+    return HttpResponseRedirect('/')
 
 
 def posts(request, post_id):
@@ -123,5 +123,24 @@ def posts(request, post_id):
     else:
         return index(request)
 
+
+@login_required
+def principalmap(request):
+    points = Picture.objects.select_related('post_picture').all()
+    return render(request, 'principalmap.html', {'points': points})
+
+
+@login_required
+def profile(request):
+    current = request.user
+    user = UserProfile.objects.get(user=current)
+    return render(request, 'profile.html', {'user_context': user})
+
+
+@login_required
+def myposts(request):
+    current = request.user
+    context = Post.objects.filter(user_post=current)
+    return render(request, 'myposts.html', {'posts': context})
 
 

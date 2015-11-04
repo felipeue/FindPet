@@ -9,4 +9,7 @@ urlpatterns = patterns('',
                        url(r'^details/$', views.user_data, name='details'),
                        url(r'^logout', views.user_logout, name='logout'),
                        url(r'^post/(?P<post_id>[\w\-]+)/$', views.posts, name='posts'),
+                       url(r'^map/$', views.principalmap, name='map'),
+                       url(r'^profile/$', views.profile, name='profile'),
+                       url(r'^myposts/$', views.myposts, name='myposts'),
                        )

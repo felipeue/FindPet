@@ -1,26 +1,98 @@
 {% extends 'base.html' %}
+{% load widget_tweaks %}
 
 {% block main %}
 
     <body>
-        <h1> Pet Finder</h1>
 
-        {% if registered %}
+    {% if registered %}
         <strong>Gracias por registrarte!</strong>
-        <a href="/principal/">Volver a pagina de inicio.</a><br />
-        {% else %}
-        <h2>Ingresa tus datos</h2><br/>
-
-        <form id="user_form" method="post" action="/principal/register/"
+        <a href="/">Volver a pagina de inicio.</a><br />
+    {% else %}
+        <div class="portlet box blue">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="fa fa-paw"></i> Crear Cuenta
+							</div>
+						</div>
+						<div class="portlet-body form">
+							<form role="form" id="user_form" method="post" action="/register/"
                 enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ user_form.as_p }}
-            {{ profile_form.as_p }}
-            <input type="submit" name="submit" value="Register" />
-        </form>
-        {% endif %}
+                             {% csrf_token %}
+								<div class="form-body">
+									<div class="form-group">
+										<label>Nombre de usuario</label>
+										<div class="input-group">
+											<span class="input-group-addon">
+											<i class="fa fa-child"></i>
+											</span>
+                                            {{ user_form.username|add_class:"form-control"}}
+										</div>
+									</div>
+                                    <div class="form-group">
+										<label>Email</label>
+										<div class="input-group">
+											<span class="input-group-addon">
+											<i class="fa fa-envelope"></i>
+											</span>
+                                            {{ user_form.email|add_class:"form-control"}}
+										</div>
+									</div>
+                                     <div class="form-group">
+										<label for="exampleInputPassword1">Password</label>
+										<div class="input-group">
 
+                                            {{ user_form.password|add_class:"form-control"}}
+                                            <span class="input-group-addon">
+											<i class="fa fa-user"></i>
+											</span>
+										</div>
+                                     </div>
+                                    <div class="form-group">
+										<label>Nombre</label>
+										<div class="input-group">
+											<span class="input-group-addon">
+											<i class="fa fa-paw"></i>
+											</span>
+                                            {{ user_form.first_name|add_class:"form-control"}}
+										</div>
+									</div>
+                                    <div class="form-group">
+										<label>Apellido</label>
+										<div class="input-group">
+											<span class="input-group-addon">
+											<i class="fa fa-paw"></i>
+											</span>
+                                            {{ user_form.last_name|add_class:"form-control"}}
+										</div>
+									</div>
+                                     <div class="form-group">
+										<label>Dirección</label>
+										<div class="input-group">
+											<span class="input-group-addon">
+											<i class="fa fa-map-marker"></i>
+											</span>
+                                            {{ profile_form.address|add_class:"form-control"}}
+										</div>
+									</div>
+                                     <div class="form-group">
+										<label>Teléfono</label>
+										<div class="input-group">
+											<span class="input-group-addon">
+											<i class="fa fa-phone"></i>
+											</span>
+                                            {{ profile_form.phone|add_class:"form-control"}}
+										</div>
+									</div>
 
+								</div>
+								<div class="form-actions">
+									<button type="submit" class="btn blue">Crear cuenta</button>
+								</div>
+							</form>
+    {% endif %}
+						</div>
+        </div>
     </body>
 
 {% endblock %}

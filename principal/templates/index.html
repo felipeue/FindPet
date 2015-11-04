@@ -7,16 +7,24 @@
         <title>Dogs</title>
         <style>
             #map-canvas {
-                height: 600px;
+                height: 300px;
             }
         </style>
-    </head>
-    <div id="map-canvas"></div>
+        <style>
+            #map-canvas2 {
+                height: 300px;
+            }
+        </style>
+        <style>
+            .black {
+            color:black;
 
+            }
+        </style>
         <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
         <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false"></script>
-        <script type="text/javascript">
+         <script type="text/javascript">
 
             function initialize() {
                 var map = new google.maps.Map(document.getElementById('map-canvas'));
@@ -32,7 +40,7 @@
                         map: map,
                         title: title
                     });
-                    var contentString = '<div id="content">'+
+                    var contentString = '<div id="content" class="black">'+
                     '<h1 id="firstHeading" class="firstHeading">'+title+'</h1>'+
                     '<div id="bodyContent">'+
                     '<p>'+ detail+'</p>'+
@@ -56,19 +64,184 @@
                     bounds.extend(position);
                 }
                 {% for point in points %}
+                    {% if point.post_picture.type == 'Perdido' %}
                     function myFunction(a) {
                     return a.replace(",",".");
                     }
                     var lat = myFunction('{{ point.post_picture.position.latitude }}');
                     var lon = myFunction('{{ point.post_picture.position.longitude }}');
                     addMarker(lat, lon, "{{ point.post_picture.title }}", "{{ point.post_picture.detail }}", "{{ point.picture }}", "{{ point.post_picture.id }}");
-
+                    {% endif %}
                 {% endfor %}
                 map.fitBounds(bounds);
             }
 
             google.maps.event.addDomListener(window, 'load', initialize);
         </script>
+   <script type="text/javascript">
+
+            function initialize() {
+                var map = new google.maps.Map(document.getElementById('map-canvas2'));
+                var bounds = new google.maps.LatLngBounds();
+
+                function addMarker(lat, lng, title, detail, image, id) {
+                    var position = new google.maps.LatLng(lat, lng);
+
+                    /*console.log(lat, lng, title, detail, typeof lat, typeof lng, typeof title, typeof detail);*/
+
+                    var marker = new google.maps.Marker({
+                        position: position,
+                        map: map,
+                        title: title
+                    });
+                    var contentString = '<div id="content" class="black">'+
+                    '<h1 id="firstHeading" class="firstHeading">'+title+'</h1>'+
+                    '<div id="bodyContent">'+
+                    '<p>'+ detail+'</p>'+
+                        '<p><a href="post/'+id+'">'+
+                    'Ver post completo</a> '+
+
+                    '</div>'+
+                                     '<div>'+
+                                    '<img src="media/'+image+'" width="50%" height="50%"/>'+
+                     '</div>'+
+                            '</div>';
+                    var windowinfo = new google.maps.InfoWindow({
+                        content: contentString
+
+                    });
+
+                    marker.addListener('click', function() {
+                        windowinfo.open(map, marker);
+                    });
+
+                    bounds.extend(position);
+                }
+                {% for point in points %}
+                    {% if point.post_picture.type == 'Encontrado' %}
+                    function myFunction(a) {
+                    return a.replace(",",".");
+                    }
+                    var lat = myFunction('{{ point.post_picture.position.latitude }}');
+                    var lon = myFunction('{{ point.post_picture.position.longitude }}');
+                    addMarker(lat, lon, "{{ point.post_picture.title }}", "{{ point.post_picture.detail }}", "{{ point.picture }}", "{{ point.post_picture.id }}");
+                    {% endif %}
+                {% endfor %}
+                map.fitBounds(bounds);
+            }
+
+            google.maps.event.addDomListener(window, 'load', initialize);
+        </script>
+    </head>
+    <!-- END PAGE HEADER-->
+
+			<div class="clearfix">
+			</div>
+			<div class="row">
+
+					<div class="col-md-6">
+						<!-- BEGIN BASIC PORTLET-->
+						<div class="portlet solid blue">
+							<div class="portlet-title">
+								<div class="caption">
+									<i class="fa fa-paw"></i>Mascotas perdidas
+								</div>
+
+							</div>
+							<div class="portlet-body">
+								<div id="map-canvas" class="gmaps">
+
+								</div>
+							</div>
+						</div>
+						<!-- END BASIC PORTLET-->
+					</div>
+
+					<div class="col-md-6">
+						<!-- BEGIN BASIC PORTLET-->
+						<div class="portlet solid yellow">
+							<div class="portlet-title">
+								<div class="caption">
+									<i class="fa fa-paw"></i>Mascotas encontradas
+								</div>
+
+							</div>
+							<div class="portlet-body">
+								<div id="map-canvas2" class="gmaps">
+
+								</div>
+							</div>
+						</div>
+						<!-- END BASIC PORTLET-->
+					</div>
+			</div>
+			<div class="clearfix">
+			</div>
+			<div class="row ">
+				<div class="col-md-6">
+					<!-- BEGIN ALERTS PORTLET-->
+					<div class="portlet blue box">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="fa fa-paw"></i>Últimas mascotas perdidas
+							</div>
+						</div>
+						<div class="portlet-body">
+							{% for point in losses %}
+                                {% if point.post_picture.type == 'Perdido' %}
+							<div class="note note-info">
+								<h4 class="block">{{ point.post_picture.title }}</h4>
+								<p>
+									 {{ point.post_picture.detail }}
+								</p>
+                                <p>
+                                    <a href="post/{{ point.post_picture.id }}">
+                    Ver post completo</a>
+                                </p>
+							</div>
+                                {% endif %}
+                            {% endfor %}
+
+
+						</div>
+					</div>
+					<!-- END ALERTS PORTLET-->
+				</div>
+				<div class="col-md-6">
+					<!-- BEGIN ALERTS PORTLET-->
+					<div class="portlet yellow box">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="fa fa-paw"></i>Últimas mascotas encontradas
+							</div>
+						</div>
+						<div class="portlet-body">
+							{% for point in losses %}
+                                {% if point.post_picture.type == 'Encontrado' %}
+							<div class="note note-warning">
+								<h4 class="block">{{ point.post_picture.title }}</h4>
+								<p>
+									 {{ point.post_picture.detail }}
+								</p>
+                                <p>
+                                    <a href="post/{{ point.post_picture.id }}">
+                    Ver post completo</a>
+                                </p>
+							</div>
+                                {% endif %}
+                            {% endfor %}
+
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+	<!-- END CONTENT -->
+	<!-- BEGIN QUICK SIDEBAR -->
+
+
+	<!-- END QUICK SIDEBAR -->
+</div>
 {% endblock %}
-
-

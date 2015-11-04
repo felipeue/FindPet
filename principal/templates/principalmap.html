@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+{% block main %}
+    <head>
+    <style>
+            #map-canvas {
+                height: 700px;
+            }
+    </style>
+    <style>
+            .black {
+            color:black;
+
+            }
+    </style>
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3&sensor=false"></script>
+         <script type="text/javascript">
+
+            function initialize() {
+                var map = new google.maps.Map(document.getElementById('map-canvas'));
+                var bounds = new google.maps.LatLngBounds();
+
+                function addMarker(lat, lng, title, detail, image, id, typex) {
+                    var position = new google.maps.LatLng(lat, lng);
+
+                    console.log(typex);
+                    var red = 'http://maps.google.com/mapfiles/ms/icons/red-dot.png';
+                    var green = 'http://maps.google.com/mapfiles/ms/icons/green-dot.png';
+
+                    if ( typex == "Perdido")
+                    {
+                        var mark = red;
+                    }
+                    if (typex == "Encontrado")
+                    {
+                        var mark = green;
+                    }
+                    var marker = new google.maps.Marker({
+                        position: position,
+                        map: map,
+                        title: title,
+                        icon: mark
+
+                    });
+                    var contentString = '<div id="content" class="black">'+
+                    '<h1 id="firstHeading" class="firstHeading">'+title+'</h1>'+
+                    '<div id="bodyContent">'+
+                    '<p>'+ detail+'</p>'+
+                        '<p><a href="../post/'+id+'">'+
+                    'Ver post completo</a> '+
+
+                    '</div>'+
+                                     '<div>'+
+                                    '<img src="media/'+image+'" width="50%" height="50%"/>'+
+                     '</div>'+
+                            '</div>';
+                    var windowinfo = new google.maps.InfoWindow({
+                        content: contentString
+
+                    });
+
+                    marker.addListener('click', function() {
+                        windowinfo.open(map, marker);
+                    });
+
+                    bounds.extend(position);
+                }
+                {% for point in points %}
+
+                    function myFunction(a) {
+                    return a.replace(",",".");
+                    }
+
+                    var lat = myFunction('{{ point.post_picture.position.latitude }}');
+                    var lon = myFunction('{{ point.post_picture.position.longitude }}');
+                    addMarker(lat, lon, "{{ point.post_picture.title }}", "{{ point.post_picture.detail }}", "{{ point.picture }}", "{{ point.post_picture.id }}", "{{ point.post_picture.type }}");
+
+                {% endfor %}
+                map.fitBounds(bounds);
+            }
+
+            google.maps.event.addDomListener(window, 'load', initialize);
+        </script>
+    </head>
+    <body>
+
+    <div class="row">
+				<div class="col-md-12">
+					<div class="portlet blue-hoki box full-height-content full-height-content-scrollable">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="fa fa-paw"></i>Mapa PetFinder
+							</div>
+
+						</div>
+						<div class="portlet-body">
+							<div class="full-height-content-body">
+                            <div id="map-canvas" class="gmaps">
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+    </body>
+
+{% endblock %}

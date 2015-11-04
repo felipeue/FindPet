@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block main %}
+<body>
+
+<div class="row">
+				<div class="col-md-6">
+					<!-- BEGIN ALERTS PORTLET-->
+					<div class="portlet purple box">
+						<div class="portlet-title">
+							<div class="caption">
+								<i class="fa fa-paw"></i>Mis publicaciones
+							</div>
+						</div>
+						<div class="portlet-body">
+                            {% for post in posts %}
+							<div class="alert alert-success">
+								<strong>Nombre:</strong> {{ post.title}} <br>
+                                <strong>Descripción:</strong> {{ post.detail}}<br>
+                                <strong>Fecha:</strong> {{ post.date}}<br>
+                                <strong>Fecha:</strong> {{ post.date}}<br>
+                                <a href="../post/{{ post.id }}"><strong>Ver post completo</strong></a>
+							</div>
+                        {% endfor %}
+						</div>
+					</div>
+                </div>
+        </div>
+</body>
+{% endblock %}
