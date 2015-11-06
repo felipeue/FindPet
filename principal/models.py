@@ -55,3 +55,12 @@ class Comment(models.Model):
     def __unicode__(self):
         return unicode(self.id)
 
+
+class Feedback(models.Model):
+    user_feedback = models.ForeignKey(User)
+    feedback = models.TextField(max_length=300)
+    type = models.CharField(max_length=100)
+
+    def __unicode__(self):
+        return unicode(self.id)
+

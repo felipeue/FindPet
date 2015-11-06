@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 from django import forms
 from django.contrib.auth.models import User
-from principal.models import Post, UserProfile, Dog, Picture
+from principal.models import Post, UserProfile, Dog, Picture, Feedback
 from datetime import date
 from django.core.validators import RegexValidator
 
@@ -57,7 +57,13 @@ class DogForm(forms.ModelForm):
 
 class PictureForm(forms.ModelForm):
 
-
     class Meta:
         model = Picture
-        exclude = ('post_picture', 'front')
+        exclude = ('post_picture',)
+
+
+class FeedbackForm(forms.ModelForm):
+
+    class Meta:
+        model = Feedback
+        exclude = ('user_feedback',)

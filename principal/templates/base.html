@@ -156,14 +156,14 @@
 					<h3 class="uppercase">Servicios de utilidad</h3>
 				</li>
 				<li>
-					<a href="index.html">
+					<a href="#">
 					<i class="fa fa-plus-square"></i>
 					<span class="title">Atención medica</span>
 					</a>
 				</li>
 
 				<li>
-					<a href="index.html">
+					<a href="#">
 					<i class="fa fa-group"></i>
 					<span class="title">Comunidades animalistas</span>
 					</a>
@@ -205,23 +205,25 @@
 					</a>
 					<ul class="sub-menu">
 						<li>
-							<a href="page_timeline.html">
+							<a href="#">
 								<i class="fa fa-envelope-o"></i>
                                 contacto@petfinder.cl
 							</a>
 						</li>
 						<li>
-							<a href="page_todo.html">
+							<a href="#">
 							<i class="fa fa-phone"></i>
                             +56 9 71986543
 							</a>
 						</li>
+                        {% if user and not user.is_anonymous %}
                         <li>
-							<a href="page_todo.html">
+							<a href="/feedback/">
 							<i class="fa fa-envelope-square"></i>
                             Comunicate con nosotros
 							</a>
 						</li>
+                        {% endif %}
 
                     </ul>
 				</li>

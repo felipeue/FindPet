@@ -12,4 +12,5 @@ urlpatterns = patterns('',
                        url(r'^map/$', views.principalmap, name='map'),
                        url(r'^profile/$', views.profile, name='profile'),
                        url(r'^myposts/$', views.myposts, name='myposts'),
+                       url(r'^feedback/$', views.feedback, name='feedback'),
                        )
