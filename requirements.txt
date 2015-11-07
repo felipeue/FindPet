@@ -21,7 +21,7 @@ django-registration-redux==1.2
 django-tinymce==2.0.2
 django-toolbelt==0.0.1
 django-widget-tweaks==1.4.1
-dnet==1.12
+dnet
 enum34==1.0.4
 foreman==0.9.7
 futures==3.0.3
