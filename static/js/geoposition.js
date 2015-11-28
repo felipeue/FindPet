@@ -12,7 +12,7 @@ if (jQuery != undefined) {
         try {
             var _ = google;
         } catch (ReferenceError) {
-            console.log('geoposition: "google" not defined.  You might not be connected to the internet.');
+            console.log('geoposition: "google" not defined.  You might not be connected to the internet!.');
             return;
         }
 
