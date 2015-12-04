@@ -1,3 +1,6 @@
 # Created by .ignore support plugin (hsz.mobi)
 test
 db.sqlite3
+.idea
+.pyc
+migrations

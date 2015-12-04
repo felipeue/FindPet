@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from principal.models import Post, UserProfile, Picture, Dog, Feedback
-from principal.forms import UserForm, UserProfileForm, PostForm, PictureForm, DogForm, FeedbackForm
+from principal.forms import UserForm, UserProfileForm, PostForm, PictureForm, DogForm, FeedbackForm, UserInfoForm
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -41,20 +41,25 @@ def user_data(request):
     if UserProfile.objects.filter(user=current).exists():
         return HttpResponseRedirect('/')
         data = ''
+        email = ''
     else:
         registered = False
         if request.method == 'POST':
             data = UserProfileForm(data=request.POST)
-            if data.is_valid():
+            email = UserInfoForm(data=request.POST, instance=request.user)
+            if data.is_valid() and email.is_valid():
+                email.save()
                 details = data.save(commit=False)
                 details.user = request.user
                 details.save()
                 return HttpResponseRedirect('/')
             else:
-                print data.errors
+                print data.errors, email.errors
         else:
             data = UserProfileForm()
-    return render(request, 'details.html', {'data': data, 'registered': registered})
+            email = UserProfileForm()
+
+    return render(request, 'details.html', {'data': data, 'registered': registered, 'email': email})
 
 
 def user_login(request):
