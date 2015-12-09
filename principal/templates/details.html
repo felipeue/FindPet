@@ -43,7 +43,7 @@
 										<label for="exampleInputPassword1">Email</label>
 										<div class="input-group">
 
-                                            {{ email.email }}
+                                            {{ email.email|add_class:"form-control" }}
                                             {{ email.email.errors }}
                                             <span class="input-group-addon">
 											<i class="fa fa-user"></i>

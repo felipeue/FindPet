@@ -105,8 +105,9 @@ class FeedbackForm(forms.ModelForm):
 
 
 class UserInfoForm(forms.ModelForm):
-    email = forms.EmailInput
+    email = forms.EmailField(label='email')
 
     class Meta:
         model = User
         fields = ('email',)
+

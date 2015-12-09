@@ -57,7 +57,7 @@ def user_data(request):
                 print data.errors, email.errors
         else:
             data = UserProfileForm()
-            email = UserProfileForm()
+            email = UserInfoForm()
 
     return render(request, 'details.html', {'data': data, 'registered': registered, 'email': email})
 
