@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from principal.models import Post, UserProfile, Dog, Picture, Feedback
 from datetime import date
 from django.core.validators import RegexValidator
+from django.forms.extras.widgets import SelectDateWidget
 
 
 class UserForm(forms.ModelForm):
@@ -53,7 +54,7 @@ class PostForm(forms.ModelForm):
     type = forms.ChoiceField(choices=CHOICES, label='Tipo')
     date = forms.DateField(label='Fecha',
                            initial=date.today,
-                           widget=forms.DateInput)
+                           widget=SelectDateWidget)
 
     class Media:
         css = {'all': ('css/geoposition.css',)}
