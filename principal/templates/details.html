@@ -26,6 +26,7 @@
 											<i class="fa fa-child"></i>
 											</span>
                                             {{ data.address|add_class:"form-control" }}
+                                            {{ data.address.errors }}
 										</div>
 									</div>
 
@@ -34,6 +35,7 @@
 										<div class="input-group">
 
                                             {{ data.phone|add_class:"form-control" }}
+                                            {{ data.phone.errors }}
                                             <span class="input-group-addon">
 											<i class="fa fa-user"></i>
 											</span>
